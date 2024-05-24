@@ -2,14 +2,15 @@ package dataAccess.repository.concretes;
 
 import core.exception.FileCannotBeUptadableException;
 import dataAccess.repo.abstracts.FileOperations;
-import dataAccess.repo.concretes.FileOperationsService;
 import dataAccess.repository.abstracts.ProductRepository;
 import entity.order.Product;
 
 import java.io.IOException;
 
+import static business.concretes.singlton.DependencyManager.getFileOperationInstance;
+
 public class ProductRepo implements ProductRepository {
-    private final FileOperations fileOperations = new FileOperationsService();
+    private final FileOperations fileOperations = getFileOperationInstance();
     private final String fileName = "C:\\Users\\LENOVO\\IdeaProjects\\eCommerceApplication\\src\\dataAccess\\repo\\file\\products.txt";
 
     @Override

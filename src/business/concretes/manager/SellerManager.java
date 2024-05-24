@@ -1,23 +1,20 @@
 package business.concretes.manager;
 
 import business.abstracts.SellerService;
-import business.abstracts.registration.Response;
 import business.concretes.observer.Observer;
-import business.concretes.observer.ProductObservable;
 import dataAccess.repository.abstracts.OrderRepository;
 import dataAccess.repository.abstracts.ProductRepository;
 import dataAccess.repository.abstracts.SellerRepository;
-import dataAccess.repository.concretes.OrderRepo;
-import dataAccess.repository.concretes.ProductRepo;
-import dataAccess.repository.concretes.SellerRepo;
 import entity.order.Product;
 import entity.user.Seller;
 import entity.user.User;
 
+import static business.concretes.singlton.DependencyManager.*;
+
 public class SellerManager implements SellerService, Observer {
-    private final SellerRepository sellerRepo = new SellerRepo();
-    private final ProductRepository productRepository = new ProductRepo();
-    private final OrderRepository orderRepository = new OrderRepo();
+    private final SellerRepository sellerRepo = getSellerRepositoryInstance();
+    private final ProductRepository productRepository = getProductRepositoryInstance();
+    private final OrderRepository orderRepository = getOrderRepositoryInstance();
     @Override
     public void getAllOrders() {
         orderRepository.showAllOrders();

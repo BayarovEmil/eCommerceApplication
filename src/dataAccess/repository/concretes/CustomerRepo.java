@@ -2,16 +2,18 @@ package dataAccess.repository.concretes;
 
 import core.exception.FileCannotBeUptadableException;
 import dataAccess.repo.abstracts.FileOperations;
-import dataAccess.repo.concretes.FileOperationsService;
 import dataAccess.repository.abstracts.CardRepository;
 import dataAccess.repository.abstracts.CustomerRepository;
 import entity.user.Customer;
 
 import java.io.IOException;
 
+import static business.concretes.singlton.DependencyManager.getCardRepositoryInstance;
+import static business.concretes.singlton.DependencyManager.getFileOperationInstance;
+
 public class CustomerRepo implements CustomerRepository {
-    private final FileOperations fileOperations = new FileOperationsService();
-    private final CardRepository cardRepository = new CardRepo();
+    private final FileOperations fileOperations = getFileOperationInstance();
+    private final CardRepository cardRepository = getCardRepositoryInstance();
     private final String fileName = "C:\\Users\\LENOVO\\IdeaProjects\\eCommerceApplication\\src\\dataAccess\\repo\\file\\customers.txt";
 
 

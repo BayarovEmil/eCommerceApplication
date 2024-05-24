@@ -5,20 +5,20 @@ import business.abstracts.registration.Response;
 import business.concretes.observer.ProductObservable;
 import business.utils.ReturnPolicy;
 import dataAccess.repository.abstracts.CardRepository;
-import dataAccess.repository.concretes.CardRepo;
-import dataAccess.repository.concretes.CustomerRepo;
-import dataAccess.repository.concretes.ProductRepo;
+import dataAccess.repository.abstracts.CustomerRepository;
+import dataAccess.repository.abstracts.ProductRepository;
 import entity.order.Card;
 import entity.order.Product;
 import entity.user.Customer;
 import entity.user.User;
 
+import static business.concretes.singlton.DependencyManager.*;
+
 public class CustomerManager implements CustomerService {
     private final ReturnPolicy returnPolicy = new ReturnPolicy();
-    private final CustomerRepo customerRepo = new CustomerRepo();
-//    private final CustomerRepo customerRepo = new CustomerRepo(getFileOperationInstance());
-    private final ProductRepo productRepo = new ProductRepo();
-    private final CardRepository cardRepository = new CardRepo();
+    private final CustomerRepository customerRepo = getCustomerRepositoryInstance();
+    private final ProductRepository productRepo = getProductRepositoryInstance();
+    private final CardRepository cardRepository = getCardRepositoryInstance();
 
     @Override
     public void returnProduct(Product product) {

@@ -1,12 +1,13 @@
 package dataAccess.repository.concretes;
 
 import dataAccess.repo.abstracts.FileOperations;
-import dataAccess.repo.concretes.FileOperationsService;
 import dataAccess.repository.abstracts.CardRepository;
 import entity.order.Card;
 
+import static business.concretes.singlton.DependencyManager.getFileOperationInstance;
+
 public class CardRepo implements CardRepository {
-    private final FileOperations fileOperationsService =new FileOperationsService();
+    private final FileOperations fileOperationsService = getFileOperationInstance();
     private final String fileName = "C:\\Users\\LENOVO\\IdeaProjects\\eCommerceApplication\\src\\dataAccess\\repo\\file\\cards.txt";
     @Override
     public boolean findByCardNumber(String number) {

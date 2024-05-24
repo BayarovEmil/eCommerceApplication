@@ -2,18 +2,18 @@ package dataAccess.repository.concretes;
 
 import core.exception.FileCannotBeUptadableException;
 import dataAccess.repo.abstracts.FileOperations;
-import dataAccess.repo.concretes.FileOperationsService;
 import dataAccess.repository.abstracts.CardRepository;
 import dataAccess.repository.abstracts.SellerRepository;
 import entity.user.Seller;
 
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+
+import static business.concretes.singlton.DependencyManager.getCardRepositoryInstance;
+import static business.concretes.singlton.DependencyManager.getFileOperationInstance;
 
 public class SellerRepo implements SellerRepository {
-    private final FileOperations fileOperations = new FileOperationsService();
-    private final CardRepository cardRepository = new CardRepo();
+    private final FileOperations fileOperations = getFileOperationInstance();
+    private final CardRepository cardRepository = getCardRepositoryInstance();
     private final String fileName = "C:\\Users\\LENOVO\\IdeaProjects\\eCommerceApplication\\src\\dataAccess\\repo\\file\\sellers.txt";
 //    Path fileName = Paths.get("C:\\Users\\LENOVO\\IdeaProjects\\eCommerceApplication\\src\\dataAccess\\repo\\file\\sellers.txt");
     @Override

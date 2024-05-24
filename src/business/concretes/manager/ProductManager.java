@@ -2,11 +2,12 @@ package business.concretes.manager;
 
 import business.abstracts.ProductService;
 import dataAccess.repository.abstracts.ProductRepository;
-import dataAccess.repository.concretes.ProductRepo;
 import entity.order.Product;
 
+import static business.concretes.singlton.DependencyManager.getProductRepositoryInstance;
+
 public class ProductManager implements ProductService {
-    private final ProductRepository productRepository = new ProductRepo();
+    private final ProductRepository productRepository = getProductRepositoryInstance();
     @Override
     public void showAllProducts() {
         productRepository.getAllProducts();
