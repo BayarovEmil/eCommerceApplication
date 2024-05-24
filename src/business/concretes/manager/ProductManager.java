@@ -1,4 +1,4 @@
-package business.concretes;
+package business.concretes.manager;
 
 import business.abstracts.ProductService;
 import dataAccess.repository.abstracts.ProductRepository;
@@ -28,18 +28,21 @@ public class ProductManager implements ProductService {
     }
 
     @Override
-    public void findProductByGreaterThanPrice() {
+    public void findProductByGreaterThanPrice(Integer unitPrice) {
         //todo
+        productRepository.getAllProductsGreaterThanPrice(unitPrice);
     }
 
     @Override
-    public void findProductByLessThanPrice() {
+    public void findProductByLessThanPrice(Integer unitPrice) {
         //todo
+        productRepository.getAllProductsLessThanPrice(unitPrice);
     }
 
     @Override
-    public void findProductsBetweenPrices() {
+    public void findProductsBetweenPrices(Integer price1, Integer price2) {
         //todo
+
     }
 
     @Override

@@ -11,5 +11,6 @@ public interface SellerRepository {
     void getSellerByStoreName(Seller seller);
 
     boolean isEmailAlreadyExists(String email);
+    boolean isEmailAndPasswordCorrect(String email,String password);
 //    void getAllSavedSellers();
 }

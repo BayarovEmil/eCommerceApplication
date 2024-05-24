@@ -9,13 +9,10 @@ import entity.user.Customer;
 import java.io.IOException;
 
 public class CustomerRepo implements CustomerRepository {
-    private final FileOperations fileOperations;
+    private final FileOperations fileOperations = new FileOperationsService();
 
-    private final String fileName = "customers.txt";
+    private final String fileName = "C:\\Users\\LENOVO\\IdeaProjects\\eCommerceApplication\\src\\dataAccess\\repo\\file\\customers.txt";
 
-    public CustomerRepo(FileOperations fileOperations) {
-        this.fileOperations = fileOperations;
-    }
 
     @Override
     public void createCustomer(Customer customer) {
@@ -51,11 +48,22 @@ public class CustomerRepo implements CustomerRepository {
 
     @Override
     public void getCustomerById(Customer customer) {
-        fileOperations.getById(customer.getId(), fileName);
+
     }
 
     @Override
     public boolean isEmailAlreadyExists(String email) {
+        if (fileOperations.getByEmail(email,fileName)) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean isEmailAndPasswordCorrect(String email, String password) {
+        if (fileOperations.isEmailAndPasswordCorrect(email,password,fileName)) {
+            return true;
+        }
         return false;
     }
 }

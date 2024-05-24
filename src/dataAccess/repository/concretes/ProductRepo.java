@@ -10,8 +10,7 @@ import java.io.IOException;
 
 public class ProductRepo implements ProductRepository {
     private final FileOperations fileOperations = new FileOperationsService();
-    private final String fileName = "products.txt";
-
+    private final String fileName = "C:\\Users\\LENOVO\\IdeaProjects\\eCommerceApplication\\src\\dataAccess\\repo\\file\\products.txt";
 
     @Override
     public void addNewProduct(Product product) {
@@ -52,17 +51,22 @@ public class ProductRepo implements ProductRepository {
     }
 
     @Override
-    public void getAllProductsLessThanPrice(Product product) {
-        fileOperations.getAllProductsLessThanPrice(product,fileName);
+    public void getAllProductsLessThanPrice(Integer unitPrice) {
+        fileOperations.getAllProductsLessThanPrice(unitPrice,fileName);
     }
 
     @Override
-    public void getAllProductsGreaterThanPrice(Product product) {
-        fileOperations.getAllProductsGreaterThanPrice(product,fileName);
+    public void getAllProductsGreaterThanPrice(Integer unitPrice) {
+        fileOperations.getAllProductsGreaterThanPrice(unitPrice,fileName);
     }
 
     @Override
-    public Product getProductById(Integer id) {
-        return null;
+    public void getAllProductBetweenPrices(Integer price1, Integer price2) {
+
+    }
+
+    @Override
+    public boolean getProductById(Integer id) {
+        return fileOperations.getById(id,fileName);
     }
 }

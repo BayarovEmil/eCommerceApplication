@@ -1,7 +1,8 @@
-package business.concretes;
+package business.concretes.manager;
 
 import business.abstracts.SellerService;
 import business.abstracts.registration.Response;
+import business.concretes.observer.Observer;
 import dataAccess.repository.abstracts.ProductRepository;
 import dataAccess.repository.abstracts.SellerRepository;
 import dataAccess.repository.concretes.ProductRepo;
@@ -10,7 +11,7 @@ import entity.order.Product;
 import entity.user.Seller;
 import entity.user.User;
 
-public class SellerManager implements SellerService {
+public class SellerManager implements SellerService, Observer {
     private final SellerRepository sellerRepo = new SellerRepo();
     private final ProductRepository productRepository = new ProductRepo();
 
@@ -21,8 +22,14 @@ public class SellerManager implements SellerService {
     }
 
     @Override
-    public void sendYourItemByProductId(Product product) {
+    public void update(String message) {
+        System.out.println(message);
+        sendYourItemByProductId(message);
+    }
 
+    @Override
+    public void sendYourItemByProductId(String data) {
+        System.out.println("Seller send "+ data.split("/")[1]+" product");
     }
 
     @Override
@@ -32,6 +39,9 @@ public class SellerManager implements SellerService {
 
     @Override
     public void addNewProduct(Product product) {
+        if (productRepository.getProductById(product.getId())) {
+            return;
+        }
         productRepository.addNewProduct(product);
     }
 
@@ -41,8 +51,8 @@ public class SellerManager implements SellerService {
     }
 
 //    @Override
-//    public void updateProductById(Product product) {
-//        productRepository.updateProductById(product);
+//    public void updateProductById(Product product,Product product2) {
+//        productRepository.updateProductById(product,product2);
 //    }
 
     @Override
@@ -71,6 +81,9 @@ public class SellerManager implements SellerService {
 
     @Override
     public boolean checkIsUserEmailAndPasswordAreCorrect(String email, String userEmail) {
+        if (sellerRepo.isEmailAlreadyExists(email)) {
+            return true;
+        }
         return false;
     }
 
@@ -86,4 +99,5 @@ public class SellerManager implements SellerService {
     public void verificationMessage() {
         System.out.println("Operation completed successfully!");
     }
+
 }

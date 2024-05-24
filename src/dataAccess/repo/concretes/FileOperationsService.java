@@ -1,8 +1,8 @@
 package dataAccess.repo.concretes;
 
 import dataAccess.repo.abstracts.FileOperations;
+import entity.order.Card;
 import entity.order.Product;
-import entity.user.Seller;
 
 import java.io.*;
 
@@ -125,7 +125,7 @@ public class FileOperationsService implements FileOperations {
     }
 
     @Override
-    public void getById(Integer id, String fileName) {
+    public boolean getById(Integer id, String fileName) {
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
             String line;
             while ((line = reader.readLine()) != null) {
@@ -134,14 +134,15 @@ public class FileOperationsService implements FileOperations {
                     String[] parts = data.split(",");
                     if (parts[0].equals(id.toString())) {
                         System.out.println(line);
-                        return; // ID bulundu, satırı döndür
+                        return true;
                     }
                 }
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        System.out.println("ID not found"); // ID bulunamadıysa
+        System.out.println("ID not found");
+        return false;
     }
 
     @Override
@@ -183,14 +184,14 @@ public class FileOperationsService implements FileOperations {
     }
 
     @Override
-    public void getAllProductsLessThanPrice(Product product, String fileName) {
+    public void getAllProductsLessThanPrice(Integer unitPrice, String fileName) {
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] datas = line.split(";");
                 for (String data : datas) {
                     String[] parts = data.split(",");
-                    if (Double.parseDouble(parts[3]) < product.getUnitPrice()) {
+                    if (Double.parseDouble(parts[3]) < unitPrice) {
                         System.out.println(line);
                         break;
                     }
@@ -202,14 +203,33 @@ public class FileOperationsService implements FileOperations {
     }
 
     @Override
-    public void getAllProductsGreaterThanPrice(Product product, String fileName) {
+    public void getAllProductsGreaterThanPrice(Integer unitPrice, String fileName) {
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] datas = line.split(";");
                 for (String data : datas) {
                     String[] parts = data.split(",");
-                    if (Double.parseDouble(parts[3]) > product.getUnitPrice()) {
+                    if (Double.parseDouble(parts[3]) > unitPrice) {
+                        System.out.println(line);
+                        break;
+                    }
+                }
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void getAllProductsBetweenPrices(Integer price1, Integer price2,String fileName) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] datas = line.split(";");
+                for (String data : datas) {
+                    String[] parts = data.split(",");
+                    if (Double.parseDouble(parts[3]) >= price1 && Double.parseDouble(parts[3]) <= price2 ) {
                         System.out.println(line);
                         break;
                     }
@@ -238,5 +258,110 @@ public class FileOperationsService implements FileOperations {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public boolean getByEmail(String email, String fileName) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] datas = line.split(";");
+                for (String data : datas) {
+                    String[] parts = data.split(",");
+                    if (parts[2].equals(email)) {
+                        System.out.println(line);
+                        return true;
+                    }
+                }
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean isEmailAndPasswordCorrect(String email, String password, String fileName) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] datas = line.split(";");
+                for (String data : datas) {
+                    String[] parts = data.split(",");
+                    if (parts[2].equals(email)&&parts[3].equals(password)) {
+                        System.out.println(line);
+                        return true;
+                    }
+                }
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean findByCardNumber(String number, String fileName) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] datas = line.split(";");
+                for (String data : datas) {
+                    String[] parts = data.split(",");
+                    if (parts[0].equals(number)) {
+                        System.out.println(line);
+                        return true;
+                    }
+                }
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return false;
+    }
+
+    @Override
+    public void increaseBalance(Card card, Integer amount, String fileName) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] datas = line.split(";");
+                for (String data : datas) {
+                    String[] parts = data.split(",");
+                    if (parts[0].equals(card.getCardNumber())) {
+                        Integer amount2 = (int) (card.getBalance()-amount);
+                        updateById(Integer.valueOf(card.getCardNumber()),fileName,(amount2).toString());
+                        return;
+                    }
+                }
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    @Override
+    public void decreaseBalance(Card card, Integer amount, String fileName) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] datas = line.split(";");
+                for (String data : datas) {
+                    String[] parts = data.split(",");
+                    if (parts[0].equals(card.getCardNumber())) {
+                        Integer amount2 = (int) (card.getBalance()+amount);
+                        updateById(Integer.valueOf(card.getCardNumber()),fileName,(amount2).toString());
+                        return;
+                    }
+                }
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
 }

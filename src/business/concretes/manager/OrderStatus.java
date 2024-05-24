@@ -1,4 +1,4 @@
-package business.concretes;
+package business.concretes.manager;
 
 public enum OrderStatus {
     PREPEARING,

@@ -2,16 +2,17 @@ package business.abstracts;
 
 import business.abstracts.registration.UserService;
 import entity.order.Product;
+import entity.user.Customer;
 
 public interface CustomerService extends UserService {
 
-    default void buyProductById(Product product) {
+    default void buyProductById(Product product,Customer customer) {
         if (!checkItemIsAvailable(product)) {
             return;
         }
         enterCardInformation();
         balanceOperations();
-        sendInformationToSeller(product);
+        sendInformationToSeller(product, customer);
         getSuccessMessage();
     }
 
@@ -30,7 +31,7 @@ public interface CustomerService extends UserService {
 
     void enterCardInformation();
     void balanceOperations();
-    void sendInformationToSeller(Product product);
+    void sendInformationToSeller(Product product, Customer customer);
     void getSuccessMessage();
     boolean checkItemIsAvailable(Product product);
 }

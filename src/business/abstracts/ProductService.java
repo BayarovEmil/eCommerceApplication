@@ -7,8 +7,8 @@ public interface ProductService {
     void findProductsByName(Product product);
     void findProductsByCategory(Product product);
     void findProductByIsDiscounted();
-    void findProductByGreaterThanPrice();
-    void findProductByLessThanPrice();
-    void findProductsBetweenPrices();
+    void findProductByGreaterThanPrice(Integer unitPrice);
+    void findProductByLessThanPrice(Integer unitPrice);
+    void findProductsBetweenPrices(Integer price1, Integer price2);
     void findProductById(Integer id);
 }

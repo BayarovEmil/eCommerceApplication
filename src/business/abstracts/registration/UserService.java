@@ -40,13 +40,14 @@ public interface UserService {
 
 
     default void choice(User user) {
-        System.out.println("1)Register\n2)Login\n3)Forgot password\nEnter your choice=>");
+        System.out.println("1)Register\n2)Login\n3)Forgot password\n4)Continiue\nEnter your choice=>");
         Scanner scanner = new Scanner(System.in);
         int op = scanner.nextInt();
         switch (op) {
             case 1: register(user); break;
             case 2: login(user); break;
             case 3: forgotPassword(user); break;
+            case 4: break;
             default: System.out.println("Your choice is wrong");
         }
     }

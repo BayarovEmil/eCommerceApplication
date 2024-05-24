@@ -7,15 +7,17 @@ import dataAccess.repository.abstracts.SellerRepository;
 import entity.user.Seller;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class SellerRepo implements SellerRepository {
     private final FileOperations fileOperations = new FileOperationsService();
-    private final String fileName = "sellers.txt";
-
+    private final String fileName = "C:\\Users\\LENOVO\\IdeaProjects\\eCommerceApplication\\src\\dataAccess\\repo\\file\\sellers.txt";
+//    Path fileName = Paths.get("C:\\Users\\LENOVO\\IdeaProjects\\eCommerceApplication\\src\\dataAccess\\repo\\file\\sellers.txt");
     @Override
     public void createSeller(Seller seller) {
         String data = seller.getId()+","+seller.getNickname()+","+seller.getEmail()
-                +","+seller.getPassword()
+                +","+seller.getPassword()+","
                 +seller.getCard();
         fileOperations.writeToFile(data,fileName);
     }
@@ -46,6 +48,17 @@ public class SellerRepo implements SellerRepository {
 
     @Override
     public boolean isEmailAlreadyExists(String email) {
+        if (fileOperations.getByEmail(email,fileName)) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean isEmailAndPasswordCorrect(String email, String password) {
+        if (fileOperations.isEmailAndPasswordCorrect(email,password,fileName)) {
+            return true;
+        }
         return false;
     }
 }

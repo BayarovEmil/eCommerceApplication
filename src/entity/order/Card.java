@@ -1,7 +1,6 @@
 package entity.order;
 
 public class Card {
-    private Integer id;
     private String cardNumber;
     private String cvc;
     private String date;
@@ -9,20 +8,11 @@ public class Card {
 
     public Card() {}
 
-    public Card(Integer id, String cardNumber, String cvc, String date, Double balance) {
-        this.id = id;
+    public Card(String cardNumber, String cvc, String date, Double balance) {
         this.cardNumber = cardNumber;
         this.cvc = cvc;
         this.date = date;
         this.balance = balance;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getCardNumber() {

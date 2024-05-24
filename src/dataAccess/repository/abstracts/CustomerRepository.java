@@ -9,4 +9,5 @@ public interface CustomerRepository {
     void updateCustomerById(Customer customer);
     void getCustomerById(Customer customer);
     boolean isEmailAlreadyExists(String email);
+    boolean isEmailAndPasswordCorrect(String email,String password);
 }

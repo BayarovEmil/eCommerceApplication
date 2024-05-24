@@ -1,7 +1,9 @@
-package business.concretes;
+package business.concretes.manager;
 
 import business.abstracts.CustomerService;
 import business.abstracts.registration.Response;
+import business.concretes.observer.Observer;
+import business.concretes.observer.ProductObservable;
 import business.utils.ReturnPolicy;
 import dataAccess.repository.concretes.CustomerRepo;
 import dataAccess.repository.concretes.ProductRepo;
@@ -9,11 +11,10 @@ import entity.order.Product;
 import entity.user.Customer;
 import entity.user.User;
 
-import static business.concretes.DependencyManager.getFileOperationInstance;
-
 public class CustomerManager implements CustomerService {
     private final ReturnPolicy returnPolicy = new ReturnPolicy();
-    private final CustomerRepo customerRepo = new CustomerRepo(getFileOperationInstance());
+    private final CustomerRepo customerRepo = new CustomerRepo();
+//    private final CustomerRepo customerRepo = new CustomerRepo(getFileOperationInstance());
     private final ProductRepo productRepo = new ProductRepo();
 
     @Override
@@ -35,8 +36,10 @@ public class CustomerManager implements CustomerService {
     }
 
     @Override
-    public void sendInformationToSeller(Product product) {
-
+    public void sendInformationToSeller(Product product,Customer customer) {
+        ProductObservable productObservable = new ProductObservable();
+        productObservable.addObserver(new SellerManager());
+        productObservable.buyProduct(product,customer);
     }
 
     @Override
@@ -46,11 +49,10 @@ public class CustomerManager implements CustomerService {
 
     @Override
     public boolean checkItemIsAvailable(Product product) {
-        var item = productRepo.getProductById(product.getId());
-        if (item == null) {
-            return false;
+        if (productRepo.getProductById(product.getId())) {
+            return true;
         }
-        return true;
+        return false;
     }
 
     @Override
@@ -77,8 +79,12 @@ public class CustomerManager implements CustomerService {
         return true;
     }
 
+
     @Override
     public boolean checkIsUserEmailAndPasswordAreCorrect(String email, String userEmail) {
+        if (customerRepo.isEmailAlreadyExists(email)) {
+            return true;
+        }
         return false;
     }
 
@@ -98,4 +104,6 @@ public class CustomerManager implements CustomerService {
     public void returnProductV2(Product product){
         returnPolicy.returnProduct(product);
     }
+
+
 }

@@ -10,9 +10,10 @@ public interface ProductRepository {
 
     void getAllProductsByProductName(Product product);
     void getAllProductsByCategory(Product product);
-    void getAllProductsLessThanPrice(Product product);
-    void getAllProductsGreaterThanPrice(Product product);
+    void getAllProductsLessThanPrice(Integer unitPrice);
+    void getAllProductsGreaterThanPrice(Integer unitPrice);
+    void getAllProductBetweenPrices(Integer price1, Integer price2);
 
-    Product getProductById(Integer id);
+    boolean getProductById(Integer id);
 
 }
