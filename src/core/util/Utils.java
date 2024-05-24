@@ -1,2 +1,5 @@
-package core.util;public class Utils {
+package core.util;
+
+public class Utils {
+
 }

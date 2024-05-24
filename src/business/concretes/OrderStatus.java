@@ -1,2 +1,8 @@
-package business.concretes;public class OrderStatus {
+package business.concretes;
+
+public enum OrderStatus {
+    PREPEARING,
+    SENDED,
+    DELIVERED
+    ;
 }

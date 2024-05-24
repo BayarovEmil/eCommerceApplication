@@ -1,62 +1,54 @@
-package business.abstracts;
+package business.abstracts.registration;
 
 import entity.user.User;
 
 import java.util.Scanner;
 
 public interface UserService {
-    default void login(User user) {
-        if (checkUserInfoFormat(user)) {
-            if (checkIsEmailAlreadyExists(user.getEmail())) {
-                if(checkIsUserEmailAndPasswordAreCorrect(user.getEmail(),user.getEmail())) {
-                    //send verification message
-                    verificationMessage();
-                } else {
-                    System.out.println("Username and password is wrong!");
-                }
-            } else {
-                System.out.println("Your account not logged in our system\n " +
-                        "Dou you want to sign up?\n1)Yes  2)No");
-                Scanner scanner = new Scanner(System.in);
-                int op = scanner.nextInt();
-                switch (op) {
-                    case 1: register(user); break;
-                    case 2: System.out.println("Welcome to our page"); break;
-                    default: System.out.println("Your choice is wrong");
-                }
-            }
+    default void register(User user) {
+        if (!checkUserInfoFormat(user)) {
+            System.out.println(Response.WRONG_FORMAT);
+            return;
         }
-        else {
-            System.out.println("User information format is not correct!");
+        if (!checkIsEmailAlreadyExists(user.getEmail())) {
+            writeToDatabase(user);
+            verificationMessage();
+            //todo continue
+        } else {
+            System.out.println(Response.ACCOUNT_EXISTS);
+            choice(user);
         }
-
 
     }
 
-    default void register(User user) {
-        //enter user full infos
+    default void login(User user) {
         if (!checkUserInfoFormat(user)) {
-            System.out.println("User format is wrong.Please try again.");
+            System.out.println(Response.WRONG_FORMAT);
             return;
         }
-        //check the infos is user already exists?
         if (!checkIsEmailAlreadyExists(user.getEmail())) {
-            writeToDatabase(user);
-            //send verification message
-            verificationMessage();
-        } else {
-            System.out.println("Your account is already exists in our system\n" +
-                    "Dou you forget your password\n 1)Forgot Password 2)Login?");
-            Scanner scanner = new Scanner(System.in);
-            int op = scanner.nextInt();
-            switch (op) {
-                case 1: forgotPassword(user); break;
-                case 2: login(user); break;
-                case 3: register(user); break; //FIXME: Fix it later
-                default: System.out.println("Choice is wrong");
-            }
+            System.out.println(Response.ACCOUNT_NOT_LOGGEDIN);
+            choice(user);
+            return;
         }
+        if (!checkIsUserEmailAndPasswordAreCorrect(user.getEmail(), user.getPassword())) {
+            System.out.println(Response.USERNAME_AND_PASSWORD_IS_WRONG);
+            return;
+        }
+        verificationMessage();
+    }
 
+
+    default void choice(User user) {
+        System.out.println("1)Register\n2)Login\n3)Forgot password\nEnter your choice=>");
+        Scanner scanner = new Scanner(System.in);
+        int op = scanner.nextInt();
+        switch (op) {
+            case 1: register(user); break;
+            case 2: login(user); break;
+            case 3: forgotPassword(user); break;
+            default: System.out.println("Your choice is wrong");
+        }
     }
 
     void forgotPassword(User user);

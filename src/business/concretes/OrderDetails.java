@@ -1,2 +1,5 @@
-package business.concretes;public class OrderDetails {
+package business.concretes;
+
+public class OrderDetails {
+
 }
