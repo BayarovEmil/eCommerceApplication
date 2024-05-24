@@ -1,6 +1,7 @@
 package business.abstracts;
 
 import business.abstracts.registration.UserService;
+import entity.order.Card;
 import entity.order.Product;
 import entity.user.Customer;
 
@@ -10,8 +11,7 @@ public interface CustomerService extends UserService {
         if (!checkItemIsAvailable(product)) {
             return;
         }
-        enterCardInformation();
-        balanceOperations();
+        balanceOperations(customer.getCard(),product.getUnitPrice());
         sendInformationToSeller(product, customer);
         getSuccessMessage();
     }
@@ -29,8 +29,8 @@ public interface CustomerService extends UserService {
     }
 
 
-    void enterCardInformation();
-    void balanceOperations();
+
+    void balanceOperations(Card card, Integer unitPrice);
     void sendInformationToSeller(Product product, Customer customer);
     void getSuccessMessage();
     boolean checkItemIsAvailable(Product product);

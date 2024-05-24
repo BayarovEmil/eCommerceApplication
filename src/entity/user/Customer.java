@@ -1,11 +1,13 @@
 package entity.user;
 
+import entity.order.Card;
+
 public class Customer extends User {
     private String firstname;
     private String lastname;
     private String address;
 
-    private String card;
+    private Card card;
 
     @Override
     public void update(String message) {
@@ -14,14 +16,14 @@ public class Customer extends User {
 
     public Customer(){}
 
-    public Customer(String firstname, String lastname, String address, String card) {
+    public Customer(String firstname, String lastname, String address, Card card) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.address = address;
         this.card = card;
     }
 
-    public Customer(Integer id, String nickname, String email, String password, String firstname, String lastname, String address, String card) {
+    public Customer(Integer id, String nickname, String email, String password, String firstname, String lastname, String address, Card card) {
         super(id, nickname, email, password);
         this.firstname = firstname;
         this.lastname = lastname;
@@ -53,11 +55,11 @@ public class Customer extends User {
         this.address = address;
     }
 
-    public String getCard() {
+    public Card getCard() {
         return card;
     }
 
-    public void setCard(String card) {
+    public void setCard(Card card) {
         this.card = card;
     }
 }

@@ -353,13 +353,60 @@ public class FileOperationsService implements FileOperations {
                     String[] parts = data.split(",");
                     if (parts[0].equals(card.getCardNumber())) {
                         Integer amount2 = (int) (card.getBalance()+amount);
-                        updateById(Integer.valueOf(card.getCardNumber()),fileName,(amount2).toString());
+                        updateByCardId(card.getCardNumber(),fileName,(amount2).toString());
                         return;
                     }
                 }
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public void updateByCardId(String id, String fileName,String info) throws IOException {
+        File inputFile = new File(fileName);
+        File tempFile = new File(inputFile.getAbsolutePath() + ".tmp");
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+             PrintWriter writer = new PrintWriter(new FileWriter(tempFile))) {
+
+            String line;
+            boolean updated = false;
+
+            while ((line = reader.readLine()) != null) {
+                String[] datas = line.split(";");
+                boolean updatedLine = false;
+
+                for (String data : datas) {
+                    String[] parts = data.split(",");
+                    if (parts[0].equals(id)) {
+                        writer.println(info); // Güncellenmiş veriyi yaz
+                        updated = true;
+                        updatedLine = true;
+                        break;
+                    }
+                }
+
+                if (!updatedLine) {
+                    writer.println(line);
+                }
+            }
+
+            if (updated) {
+                if (!inputFile.delete()) {
+                    System.out.println("Could not delete file");
+                    return;
+                }
+                if (!tempFile.renameTo(inputFile)) {
+                    System.out.println("Could not rename file");
+                }
+            } else {
+                tempFile.delete(); // Geçici dosyayı sil
+                System.out.println("ID not found");
+            }
+
+        } catch (IOException e) {
+            throw e;
         }
     }
 

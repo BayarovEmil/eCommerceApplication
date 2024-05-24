@@ -1,8 +1,10 @@
 package entity.user;
 
+import entity.order.Card;
+
 public class Seller extends User {
 
-    private String card;
+    private Card card;
 
     @Override
     public void update(String message) {
@@ -12,21 +14,21 @@ public class Seller extends User {
     public Seller() {}
 
     // todo singleton design pattern
-    public Seller(String card) {
+    public Seller(Card card) {
         this.card = card;
     }
 
-    public Seller(Integer id, String nickname, String email, String password, String card) {
+    public Seller(Integer id, String nickname, String email, String password, Card card) {
         super(id, nickname, email, password);
         this.card = card;
     }
 
 
-    public String getCard() {
+    public Card getCard() {
         return card;
     }
 
-    public void setCard(String card) {
+    public void setCard(Card card) {
         this.card = card;
     }
 }

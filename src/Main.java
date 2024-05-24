@@ -25,17 +25,18 @@ public class Main {
         );
 
         Seller seller = new Seller(
-                1,"Elbay","qasimzade.seller@gmail.com","elman1234","4169738822221111"
+                1,"Elbay","qasimzade.seller@gmail.com","elman1234",card1
         );
         SellerService sellerService = new SellerManager();
         sellerService.register(seller);
         sellerService.login(seller);
         sellerService.addNewProduct(product);
         sellerService.deleteProductById(product);
+        sellerService.showAllProducts();
 
         Customer customer = new Customer(
                 2,"Lazarus","beyerovemil@gmail.com","emil1234",
-                "Emil","Bayarov","Baku","4169738811112222"
+                "Emil","Bayarov","Baku", card2
         );
 
         CustomerService customerService = new CustomerManager();

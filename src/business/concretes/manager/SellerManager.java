@@ -3,8 +3,11 @@ package business.concretes.manager;
 import business.abstracts.SellerService;
 import business.abstracts.registration.Response;
 import business.concretes.observer.Observer;
+import business.concretes.observer.ProductObservable;
+import dataAccess.repository.abstracts.OrderRepository;
 import dataAccess.repository.abstracts.ProductRepository;
 import dataAccess.repository.abstracts.SellerRepository;
+import dataAccess.repository.concretes.OrderRepo;
 import dataAccess.repository.concretes.ProductRepo;
 import dataAccess.repository.concretes.SellerRepo;
 import entity.order.Product;
@@ -14,11 +17,10 @@ import entity.user.User;
 public class SellerManager implements SellerService, Observer {
     private final SellerRepository sellerRepo = new SellerRepo();
     private final ProductRepository productRepository = new ProductRepo();
-
+    private final OrderRepository orderRepository = new OrderRepo();
     @Override
     public void getAllOrders() {
-        //todo
-        System.out.println(Response.UNCOMPLETED_OPERATION);
+        orderRepository.showAllOrders();
     }
 
     @Override

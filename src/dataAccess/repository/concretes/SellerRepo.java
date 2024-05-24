@@ -3,6 +3,7 @@ package dataAccess.repository.concretes;
 import core.exception.FileCannotBeUptadableException;
 import dataAccess.repo.abstracts.FileOperations;
 import dataAccess.repo.concretes.FileOperationsService;
+import dataAccess.repository.abstracts.CardRepository;
 import dataAccess.repository.abstracts.SellerRepository;
 import entity.user.Seller;
 
@@ -12,13 +13,15 @@ import java.nio.file.Paths;
 
 public class SellerRepo implements SellerRepository {
     private final FileOperations fileOperations = new FileOperationsService();
+    private final CardRepository cardRepository = new CardRepo();
     private final String fileName = "C:\\Users\\LENOVO\\IdeaProjects\\eCommerceApplication\\src\\dataAccess\\repo\\file\\sellers.txt";
 //    Path fileName = Paths.get("C:\\Users\\LENOVO\\IdeaProjects\\eCommerceApplication\\src\\dataAccess\\repo\\file\\sellers.txt");
     @Override
     public void createSeller(Seller seller) {
         String data = seller.getId()+","+seller.getNickname()+","+seller.getEmail()
                 +","+seller.getPassword()+","
-                +seller.getCard();
+                +seller.getCard().getCardNumber();
+        cardRepository.addNewCardAccount(seller.getCard());
         fileOperations.writeToFile(data,fileName);
     }
 

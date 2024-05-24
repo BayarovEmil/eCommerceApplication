@@ -2,11 +2,13 @@ package business.concretes.manager;
 
 import business.abstracts.CustomerService;
 import business.abstracts.registration.Response;
-import business.concretes.observer.Observer;
 import business.concretes.observer.ProductObservable;
 import business.utils.ReturnPolicy;
+import dataAccess.repository.abstracts.CardRepository;
+import dataAccess.repository.concretes.CardRepo;
 import dataAccess.repository.concretes.CustomerRepo;
 import dataAccess.repository.concretes.ProductRepo;
+import entity.order.Card;
 import entity.order.Product;
 import entity.user.Customer;
 import entity.user.User;
@@ -16,6 +18,7 @@ public class CustomerManager implements CustomerService {
     private final CustomerRepo customerRepo = new CustomerRepo();
 //    private final CustomerRepo customerRepo = new CustomerRepo(getFileOperationInstance());
     private final ProductRepo productRepo = new ProductRepo();
+    private final CardRepository cardRepository = new CardRepo();
 
     @Override
     public void returnProduct(Product product) {
@@ -24,15 +27,11 @@ public class CustomerManager implements CustomerService {
     }
 
     @Override
-    public void enterCardInformation() {
-        //todo
-        System.out.println(Response.UNCOMPLETED_OPERATION);
-    }
-
-    @Override
-    public void balanceOperations() {
-        //todo
-        System.out.println("Your balance increased!");
+    public void balanceOperations(Card card, Integer unitPrice) {
+        if (!cardRepository.findByCardNumber(card.getCardNumber())) {
+            return;
+        }
+        cardRepository.decreaseBalanceByCardNumber(card,unitPrice);
     }
 
     @Override
