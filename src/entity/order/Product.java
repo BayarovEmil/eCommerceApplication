@@ -25,11 +25,6 @@ public class Product {
         observers.remove(observer);
     }
 
-    private void notifyObservers(String message) {
-        for (User observer : observers) {
-            observer.update(message);
-        }
-    }
 
 
     public Product(Integer id, String category, String productName, Integer unitPrice, Integer discount, String description, Integer sellingCount, boolean isReturnable) {
@@ -47,6 +42,11 @@ public class Product {
         this.category = category;
     }
 
+    private void notifyObservers(String message) {
+        for (User observer : observers) {
+            observer.update(message);
+        }
+    }
     public Integer getId() {
         return id;
     }
@@ -67,13 +67,13 @@ public class Product {
         return unitPrice;
     }
 
+    public Integer getDiscount() {
+        return discount;
+    }
+
     public void setUnitPrice(Integer unitPrice) {
         this.unitPrice = unitPrice;
         notifyObservers("The price of " + productName + " has been updated to " + unitPrice + ".");
-    }
-
-    public Integer getDiscount() {
-        return discount;
     }
 
     public void setDiscount(Integer discount) {

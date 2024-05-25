@@ -35,6 +35,8 @@ public class Main {
         sellerService.addNewProduct(product);
         sellerService.deleteProductById(product);
         sellerService.showAllProducts();
+        // Observer design pattern
+        product.setUnitPrice(550);
 
         Customer customer = new Customer(
                 2,"Lazarus","beyerovemil@gmail.com","emil1234",
@@ -47,7 +49,7 @@ public class Main {
 
         // Searching
         Scanner scanner = new Scanner(System.in);
-        int op = scanner.nextInt();
+        // Enter choice must be later than showing menu
         System.out.println("1)Show All Products\n" +
                 "2)Find Product By Id\n" +
                 "3)Find Product By Is Discounted\n" +
@@ -56,6 +58,7 @@ public class Main {
                 "6)Find Product By Less Than Price\n" +
                 "7)Find Product By Greater ThanPrice\n" +
                 "8)Find Products Between Prices");
+        int op = scanner.nextInt();
         switch (op){
             case 1: productService.showAllProducts(); break;
             case 2: productService.findProductById(3); break;

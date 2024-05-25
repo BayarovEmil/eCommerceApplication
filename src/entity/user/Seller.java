@@ -6,11 +6,6 @@ public class Seller extends User {
 
     private Card card;
 
-    @Override
-    public void update(String message) {
-        System.out.println("Seller " + super.getNickname() + " received notification: " + message);
-    }
-
     public Seller() {}
 
     // todo singleton design pattern
@@ -23,6 +18,10 @@ public class Seller extends User {
         this.card = card;
     }
 
+    @Override
+    public void update(String message) {
+        System.out.println("Seller " + super.getNickname() + " received notification: " + message);
+    }
 
     public Card getCard() {
         return card;
