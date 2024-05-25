@@ -33,9 +33,9 @@ public class ProductRepo implements ProductRepository {
     }
 
     @Override
-    public void updateProductById(Product product,String data) {
+    public void updateProductById(Product product, Product product2) {
         try {
-            fileOperations.updateById(product.getId(), fileName,data);
+            fileOperations.updateById(product.getId(), fileName, product2);
         } catch (IOException e) {
             throw new FileCannotBeUptadableException("Product infos cannot be updatable.");
         }

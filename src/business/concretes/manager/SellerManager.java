@@ -49,10 +49,10 @@ public class SellerManager implements SellerService, Observer {
         productRepository.deleteProductById(product);
     }
 
-//    @Override
-//    public void updateProductById(Product product,Product product2) {
-//        productRepository.updateProductById(product,product2);
-//    }
+    @Override
+   public void updateProductById(Product product,Product product2) {
+        productRepository.updateProductById(product,product2);
+    }
 
     @Override
     public void forgotPassword(User user) {
