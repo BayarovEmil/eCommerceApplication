@@ -6,7 +6,7 @@ public interface ProductRepository {
     void addNewProduct(Product product);
     void deleteProductById(Product product);
     void getAllProducts();
-    void updateProductById(Product product,String data);
+    void updateProductById(Product product,Product product2);
 
     void getAllProductsByProductName(Product product);
     void getAllProductsByCategory(Product product);

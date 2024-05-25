@@ -77,7 +77,7 @@ public class FileOperationsService implements FileOperations {
     }
 
     @Override
-    public void updateById(Integer id, String fileName,String info) throws IOException {
+    public void updateById(Integer id, String fileName,Product product) throws IOException {
         File inputFile = new File(fileName);
         File tempFile = new File(inputFile.getAbsolutePath() + ".tmp");
 
@@ -94,6 +94,10 @@ public class FileOperationsService implements FileOperations {
                 for (String data : datas) {
                     String[] parts = data.split(",");
                     if (parts[0].equals(id.toString())) {
+                        String info = product.getId()+","+product.getProductName()+","+product.getCategory()+","
+                                +product.getUnitPrice()+","
+                                + product.getDiscount()+","+product.getDescription()+","
+                                +product.getSellingCount()+","+product.isReturnable();
                         writer.println(info); // Güncellenmiş veriyi yaz
                         updated = true;
                         updatedLine = true;
