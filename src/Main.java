@@ -9,6 +9,8 @@ import entity.order.Product;
 import entity.user.Customer;
 import entity.user.Seller;
 
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
         System.out.println("Welcome to main page\n");
@@ -44,14 +46,28 @@ public class Main {
         customerService.login(customer);
 
         // Searching
-        productService.showAllProducts();
-        productService.findProductById(3);
-        productService.findProductByIsDiscounted();
-        productService.findProductsByName(product);
-        productService.findProductsByCategory(product);
-        productService.findProductByLessThanPrice(700);
-        productService.findProductByGreaterThanPrice(500);
-        productService.findProductsBetweenPrices(400,1000);
+        Scanner scanner = new Scanner(System.in);
+        int op = scanner.nextInt();
+        System.out.println("1)Show All Products\n" +
+                "2)Find Product By Id\n" +
+                "3)Find Product By Is Discounted\n" +
+                "4)Find Products By Name\n" +
+                "5)Find Products By Category\n" +
+                "6)Find Product By Less Than Price\n" +
+                "7)Find Product By Greater ThanPrice\n" +
+                "8)Find Products Between Prices");
+        switch (op){
+            case 1: productService.showAllProducts(); break;
+            case 2: productService.findProductById(3); break;
+            case 3: productService.findProductByIsDiscounted(); break;
+            case 4: productService.findProductsByName(product); break;
+            case 5:  productService.findProductsByCategory(product); break;
+            case 6: productService.findProductByLessThanPrice(700); break;
+            case 7: productService.findProductByGreaterThanPrice(500); break;
+            case 8: productService.findProductsBetweenPrices(400,1000); break;
+            default:
+                System.out.println("Choices is wrong");
+         }
 
         customerService.buyProductById(product,customer);
         sellerService.getAllOrders();
