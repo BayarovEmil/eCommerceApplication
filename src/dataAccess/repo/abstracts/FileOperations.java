@@ -9,7 +9,7 @@ public interface FileOperations {
     void getAll(String fileName);
     void writeToFile(String text,String fileName);
     void deleteById(Integer id,String fileName);
-    void updateById(Integer id,String fileName,String data) throws IOException;
+    void updateById(Integer id,String fileName,Product product) throws IOException;
     boolean getById(Integer id,String fileName);
 
     void getAllProductsByProductName(Product product,String fileName);
